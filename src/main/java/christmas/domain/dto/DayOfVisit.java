@@ -1,7 +1,7 @@
 package christmas.domain.dto;
 
-public record Date(int day) {
-    public Date {
+public record DayOfVisit(int day) {
+    public DayOfVisit {
         checkDayRange(day);
     }
 

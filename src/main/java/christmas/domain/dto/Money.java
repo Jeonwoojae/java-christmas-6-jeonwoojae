@@ -1,0 +1,15 @@
+package christmas.domain.dto;
+
+public record Money(long amount) implements Comparable<Money> {
+
+    public Money {
+        if (amount < 0) {
+            throw new IllegalArgumentException("금액은 음수가 될 수 없습니다.");
+        }
+    }
+
+    @Override
+    public int compareTo(Money other) {
+        return Long.compare(this.amount, other.amount);
+    }
+}

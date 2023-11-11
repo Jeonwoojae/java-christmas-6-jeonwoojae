@@ -2,6 +2,7 @@ package christmas.domain.discount;
 
 import christmas.domain.Order;
 import christmas.domain.dto.Day;
+import christmas.domain.dto.DiscountInfo;
 import christmas.domain.dto.Money;
 
 public class ChristmasDiscountStrategy implements DateDiscountStrategy {

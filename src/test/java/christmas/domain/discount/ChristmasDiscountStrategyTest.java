@@ -5,6 +5,7 @@ import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 import christmas.domain.Menu;
 import christmas.domain.Order;
 import christmas.domain.dto.Day;
+import christmas.domain.dto.DiscountInfo;
 import christmas.domain.dto.Money;
 import java.util.ArrayList;
 import java.util.List;

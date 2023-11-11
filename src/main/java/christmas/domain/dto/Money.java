@@ -12,4 +12,16 @@ public record Money(long amount) implements Comparable<Money> {
     public int compareTo(Money other) {
         return Long.compare(this.amount, other.amount);
     }
+
+    public Money multiply(int multiplier) {
+        return new Money(this.amount * multiplier);
+    }
+
+    public Money add(Money other) {
+        return new Money(this.amount + other.amount);
+    }
+
+    public Money minus(Money other) {
+        return new Money(this.amount - other.amount);
+    }
 }

@@ -1,6 +1,6 @@
 package christmas.domain.dto;
 
-public record Day(int day) implements Comparable<Day>{
+public record Day(int day) implements Comparable<Day> {
     public Day {
         checkDayRange(day);
     }
@@ -17,6 +17,15 @@ public record Day(int day) implements Comparable<Day>{
     }
 
     public Integer getLeftDay(Day otherDay) {
-        return otherDay.day- this.day;
+        return otherDay.day - this.day;
+    }
+
+    public boolean isWeekDay() {
+        int dayOfWeek = this.day % 7;
+        // 1일이 금요일이므로, 1일부터 3일까지 (금요일, 토요일, 일요일)와 7일 (목요일)은 주말입니다.
+        if (dayOfWeek == 1 || dayOfWeek == 2) {
+            return false;
+        }
+        return true;
     }
 }

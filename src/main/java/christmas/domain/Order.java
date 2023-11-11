@@ -9,8 +9,12 @@ import java.util.Map;
 public class Order {
     private Map<Menu,Integer> orderMenus = new HashMap<>();
 
-    public Order(List<Menu> orderMenus) {
+    // TODO 주문 생성 방식 메뉴와 갯수로 바로 받아야 함.
+    public Order(List<Menu> newOrder) {
         // TODO 주문 예외사항 확인
+        for (Menu menu : newOrder) {
+            orderMenus.put(menu, 1);
+        }
 
     }
 
@@ -21,4 +25,15 @@ public class Order {
         // TODO 주문의 총 합
         return null;
     }
+
+    public int getNumberOfMenuCategory(MenuCategory category) {
+        int count = 0;
+        for (Menu menu : orderMenus.keySet()) {
+            if (menu.getCategory() == category) {
+                count += orderMenus.get(menu);
+            }
+        }
+        return count;
+    }
+
 }

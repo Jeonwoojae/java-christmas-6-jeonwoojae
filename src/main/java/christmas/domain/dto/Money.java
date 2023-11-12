@@ -24,4 +24,8 @@ public record Money(long amount) implements Comparable<Money> {
     public Money minus(Money other) {
         return new Money(this.amount - other.amount);
     }
+
+    public boolean isGreaterThan(Money money) {
+        return amount >= money.amount;
+    }
 }

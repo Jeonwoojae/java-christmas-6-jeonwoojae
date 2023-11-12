@@ -1,4 +1,4 @@
-package christmas.domain.dto;
+package christmas.dto;
 
 public record Money(long amount) implements Comparable<Money> {
 

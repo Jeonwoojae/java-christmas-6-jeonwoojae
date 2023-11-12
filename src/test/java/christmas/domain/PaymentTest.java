@@ -1,15 +1,14 @@
 package christmas.domain;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
-import static org.junit.jupiter.api.Assertions.*;
 
 import christmas.domain.discount.AlwaysDiscountStrategy;
 import christmas.domain.discount.ChristmasDiscountStrategy;
 import christmas.domain.discount.DateDiscountStrategy;
 import christmas.domain.discount.SpecialDiscountStrategy;
-import christmas.domain.dto.Day;
-import christmas.domain.dto.Money;
-import christmas.domain.dto.TotalBenefit;
+import christmas.dto.Day;
+import christmas.dto.Money;
+import christmas.dto.TotalBenefit;
 import christmas.domain.giveway.GiveChampagneStrategy;
 import christmas.domain.giveway.GiveawayEvent;
 import java.util.ArrayList;

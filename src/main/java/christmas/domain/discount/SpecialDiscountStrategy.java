@@ -1,10 +1,10 @@
 package christmas.domain.discount;
 
 import christmas.domain.Order;
-import christmas.domain.constants.SpecialDays;
-import christmas.domain.dto.Day;
-import christmas.domain.dto.DiscountInfo;
-import christmas.domain.dto.Money;
+import christmas.constants.SpecialDays;
+import christmas.dto.Day;
+import christmas.dto.DiscountInfo;
+import christmas.dto.Money;
 
 public class SpecialDiscountStrategy implements DateDiscountStrategy{
     @Override

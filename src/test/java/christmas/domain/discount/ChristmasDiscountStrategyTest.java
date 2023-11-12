@@ -3,9 +3,9 @@ package christmas.domain.discount;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 
 import christmas.domain.Order;
-import christmas.domain.dto.Day;
-import christmas.domain.dto.DiscountInfo;
-import christmas.domain.dto.Money;
+import christmas.dto.Day;
+import christmas.dto.DiscountInfo;
+import christmas.dto.Money;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 

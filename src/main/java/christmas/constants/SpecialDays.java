@@ -1,6 +1,6 @@
-package christmas.domain.constants;
+package christmas.constants;
 
-import christmas.domain.dto.Day;
+import christmas.dto.Day;
 import java.util.Arrays;
 import java.util.List;
 

@@ -1,6 +1,6 @@
 package christmas.domain;
 
-import christmas.domain.dto.Money;
+import christmas.dto.Money;
 import java.util.Arrays;
 import java.util.Optional;
 

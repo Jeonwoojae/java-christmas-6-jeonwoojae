@@ -1,4 +1,4 @@
-package christmas.domain.dto;
+package christmas.dto;
 
 public record Day(int day) implements Comparable<Day> {
     public Day {

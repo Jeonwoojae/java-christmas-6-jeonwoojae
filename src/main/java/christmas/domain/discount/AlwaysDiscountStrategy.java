@@ -2,9 +2,9 @@ package christmas.domain.discount;
 
 import christmas.domain.MenuCategory;
 import christmas.domain.Order;
-import christmas.domain.dto.Day;
-import christmas.domain.dto.DiscountInfo;
-import christmas.domain.dto.Money;
+import christmas.dto.Day;
+import christmas.dto.DiscountInfo;
+import christmas.dto.Money;
 
 public class AlwaysDiscountStrategy implements DateDiscountStrategy{
     @Override

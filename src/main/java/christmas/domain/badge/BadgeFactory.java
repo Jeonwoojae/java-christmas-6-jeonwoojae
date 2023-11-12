@@ -1,7 +1,7 @@
 package christmas.domain.badge;
 
-import christmas.domain.dto.DiscountInfo;
-import christmas.domain.dto.Money;
+import christmas.dto.DiscountInfo;
+import christmas.dto.Money;
 import java.util.List;
 
 public class BadgeFactory {

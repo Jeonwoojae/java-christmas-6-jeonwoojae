@@ -1,4 +1,4 @@
-package christmas.domain.dto;
+package christmas.dto;
 
 import christmas.domain.Menu;
 import christmas.domain.badge.Badge;

@@ -4,8 +4,8 @@ import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 import static org.junit.jupiter.api.Assertions.*;
 
 import christmas.domain.discount.Event;
-import christmas.domain.dto.DiscountInfo;
-import christmas.domain.dto.Money;
+import christmas.dto.DiscountInfo;
+import christmas.dto.Money;
 import java.util.ArrayList;
 import java.util.List;
 import org.junit.jupiter.api.DisplayName;

@@ -1,10 +1,5 @@
 package christmas.domain.discount;
 
-import static christmas.domain.Menu.CAESAR_SALAD;
-import static christmas.domain.Menu.CHOCO_CAKE;
-import static christmas.domain.Menu.ICE_CREAM;
-import static christmas.domain.Menu.SEAFOOD_PASTA;
-import static christmas.domain.Menu.T_BONE_STEAK;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -22,34 +17,36 @@ class AlwaysDiscountStrategyTest {
     private final AlwaysDiscountStrategy alwaysDiscountStrategy = new AlwaysDiscountStrategy();
     private final Day ONE_WEEK_DAY = new Day(3);
     private final Day ONE_WEEKEND_DAY = new Day(10);
-    private final List<Menu> DESSERTS = new ArrayList<>(List.of(CHOCO_CAKE,ICE_CREAM));
-    private final List<Menu> MAIN_MENUS = new ArrayList<>(List.of(T_BONE_STEAK,SEAFOOD_PASTA));
-    private final List<Menu> APPETIZER = new ArrayList<>(List.of(CAESAR_SALAD));
+    private final String DESSERT_LIST = "초코케이크-1,아이스크림-1";
+    private final String MAIN_MENU_LIST = "티본스테이크-1,해산물파스타-1";
+    private final String APPETIZER_LIST = "시저샐러드-1";
 
     @Test
     @DisplayName("평일이면 디저트 메뉴당 2023원 할인")
     void calculateDiscountAmount_WeekDays() {
-        List<Menu> menus = new ArrayList<>(DESSERTS);
-        menus.addAll(MAIN_MENUS);
-        menus.addAll(APPETIZER);
-        Order order = new Order(menus);
+        List<String> menus = new ArrayList<>();
+        menus.add(DESSERT_LIST);
+        menus.add(MAIN_MENU_LIST);
+        menus.add(APPETIZER_LIST);
+        Order order = new Order(String.join(",", menus));
         DiscountInfo discountInfo = alwaysDiscountStrategy.calculateDiscountAmount(order, ONE_WEEK_DAY);
 
-        assertThat(discountInfo.amount()).isEqualTo(new Money(DESSERTS.size()* 2023L));
+        assertThat(discountInfo.amount()).isEqualTo(new Money(2 * 2023L));
         assertThat(discountInfo.eventName()).isEqualTo(Event.ALWAYS_DISCOUNT);
     }
 
 
     @Test
-    @DisplayName("평일이면 디저트 메뉴당 2023원 할인")
+    @DisplayName("주말이면 메인 메뉴당 2023원 할인")
     void calculateDiscountAmount_WeekendDays() {
-        List<Menu> menus = new ArrayList<>(DESSERTS);
-        menus.addAll(MAIN_MENUS);
-        menus.addAll(APPETIZER);
-        Order order = new Order(menus);
+        List<String> menus = new ArrayList<>();
+        menus.add(DESSERT_LIST);
+        menus.add(MAIN_MENU_LIST);
+        menus.add(APPETIZER_LIST);
+        Order order = new Order(String.join(",", menus));
         DiscountInfo discountInfo = alwaysDiscountStrategy.calculateDiscountAmount(order, ONE_WEEKEND_DAY);
 
-        assertThat(discountInfo.amount()).isEqualTo(new Money(MAIN_MENUS.size()*2023L));
+        assertThat(discountInfo.amount()).isEqualTo(new Money(2 * 2023L));
         assertThat(discountInfo.eventName()).isEqualTo(Event.ALWAYS_DISCOUNT);
     }
 }

@@ -12,6 +12,7 @@ public class GiveChampagneStrategy implements GiveawayEvent{
         if (order.getTotalPrice().compareTo(new Money(120_000)) == 1) {
             return freeMenu;
         }
+        // TODO null을 반환하는게 맞을까?
         return null;
     }
 }

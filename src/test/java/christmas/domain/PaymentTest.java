@@ -1,10 +1,5 @@
 package christmas.domain;
 
-import static christmas.domain.Menu.CAESAR_SALAD;
-import static christmas.domain.Menu.CHOCO_CAKE;
-import static christmas.domain.Menu.ICE_CREAM;
-import static christmas.domain.Menu.SEAFOOD_PASTA;
-import static christmas.domain.Menu.T_BONE_STEAK;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -33,8 +28,7 @@ class PaymentTest {
 
     private final Payment payment = new Payment(discountStrategyList, giveawayEventList);
 
-    private final List<Menu> MENU_LIST = new ArrayList<>(
-            List.of(CHOCO_CAKE, ICE_CREAM, T_BONE_STEAK, SEAFOOD_PASTA, CAESAR_SALAD));
+    private final String MENU_LIST = "초코케이크-1,아이스크림-1,티본스테이크-1,해산물파스타-1,시저샐러드-1";
 
     @Test
     @DisplayName("디데이할인 1200원 , 평일할인 4046원, 특별할인 1000원")

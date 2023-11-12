@@ -1,25 +1,103 @@
 package christmas.domain;
 
 import christmas.domain.dto.Money;
+import java.util.AbstractMap;
 import java.util.HashMap;
-import java.util.List;
+import java.util.HashSet;
 import java.util.Map;
+import java.util.Map.Entry;
 
-// 주문한 내용을 저장
 public class Order {
-    private Map<Menu, Integer> orderMenus = new HashMap<>();
+    private final Map<Menu, Integer> orderMenus;
 
-    // TODO 주문 생성 방식 메뉴와 갯수로 바로 받아야 함.
-    public Order(List<Menu> newOrder) {
-        // TODO 주문 예외사항 확인
-        for (Menu menu : newOrder) {
-            orderMenus.put(menu, 1);
+    public Order(String orderInput) {
+        // 주문 문자열을 파싱하여 메뉴와 수량의 맵을 생성
+        Map<Menu, Integer> parsedOrder = parseOrderInput(orderInput);
+
+        // 주문 예외사항 확인
+        checkOrder(parsedOrder);
+
+        // 주문 메뉴 설정
+        this.orderMenus = parsedOrder;
+    }
+
+    private Map<Menu, Integer> parseOrderInput(String orderInput) {
+        Map<Menu, Integer> parsedOrder = new HashMap<>();
+        String[] orders = orderInput.split(",");
+
+        for (String order : orders) {
+            Map.Entry<Menu, Integer> menuAndQuantity = parseOrder(order);
+            checkDuplicateMenu(parsedOrder, menuAndQuantity);
+            parsedOrder.put(menuAndQuantity.getKey(), menuAndQuantity.getValue());
+        }
+
+        return parsedOrder;
+    }
+
+    private void checkDuplicateMenu(Map<Menu, Integer> parsedOrder, Entry<Menu, Integer> menuAndQuantity) {
+        if (parsedOrder.containsKey(menuAndQuantity.getKey())) {
+            throw new IllegalArgumentException("[ERROR] 중복 메뉴를 입력하였습니다.");
         }
     }
 
-    // 주문 완료 -> 이벤트 확인
+    private Map.Entry<Menu, Integer> parseOrder(String order) {
+        String[] menuAndQuantity = order.split("-");
+        checkParsingError(menuAndQuantity);
+        String menuName = menuAndQuantity[0];
+        int quantity = Integer.parseInt(menuAndQuantity[1]);
+        checkQuantityRange(quantity);
 
-    // 총 주문 금액
+        Menu menu = Menu.findMenuByName(menuName)
+                .orElseThrow(() -> new IllegalArgumentException("메뉴에 없는 메뉴입니다."));
+
+        return new AbstractMap.SimpleEntry<>(menu, quantity);
+    }
+
+    private static void checkQuantityRange(int quantity) {
+        if (quantity <= 0) {
+            throw new IllegalArgumentException("[ERROR] 메뉴의 수량은 1 이상이어야 합니다.");
+        }
+    }
+
+    private void checkParsingError(String[] menuAndQuantity) {
+        if (menuAndQuantity.length != 2) {
+            throw new IllegalArgumentException("[ERROR] 주문 형식이 잘못되었습니다.");
+        }
+    }
+
+    private void checkOrder(Map<Menu, Integer> parsedOrder) {
+        checkOrderNotEmpty(parsedOrder);
+        checkDuplicatedOrder(parsedOrder);
+        checkQuantityLimit(parsedOrder);
+        checkOnlyDrinkOrder(parsedOrder);
+    }
+
+    private void checkOrderNotEmpty(Map<Menu, Integer> parsedOrder) {
+        if (parsedOrder.isEmpty()) {
+            throw new IllegalArgumentException("[ERROR] 메뉴의 개수는 1개 이상 입력해야합니다.");
+        }
+    }
+
+    private void checkDuplicatedOrder(Map<Menu, Integer> parsedOrder) {
+        if (parsedOrder.size() != new HashSet<>(parsedOrder.keySet()).size()) {
+            throw new IllegalArgumentException("[ERROR] 중복 메뉴를 입력하였습니다.");
+        }
+    }
+
+    private void checkQuantityLimit(Map<Menu, Integer> parsedOrder) {
+        int totalQuantity = parsedOrder.values().stream().mapToInt(Integer::intValue).sum();
+        if (totalQuantity > 20) {
+            throw new IllegalArgumentException("[ERROR] 최대 20개까지 주문 가능합니다.");
+        }
+    }
+
+    private void checkOnlyDrinkOrder(Map<Menu, Integer> parsedOrder) {
+        boolean isOnlyDrink = parsedOrder.keySet().stream().allMatch(menu -> menu.getCategory() == MenuCategory.DRINK);
+        if (isOnlyDrink) {
+            throw new IllegalArgumentException("[ERROR] 음료만 주문할 수 없습니다.");
+        }
+    }
+
     public Money getTotalPrice() {
         Money total = new Money(0);
         for (Map.Entry<Menu, Integer> entry : orderMenus.entrySet()) {

@@ -15,7 +15,8 @@ public class ChristmasDiscountStrategy implements DateDiscountStrategy {
         Money discountAmount = new Money(0);
         int leftDay = day.getLeftDay(CHRISTMAS_DAY);
         if (leftDay > 0) {
-            discountAmount = discountStart.add(discountADay.multiply(leftDay));
+            // TODO 계산 과정 리팩토링 필요
+            discountAmount = discountStart.add(discountADay.multiply(day.day())).minus(discountADay);
         }
         return new DiscountInfo(Event.CHRISTMAS_DISCOUNT, discountAmount);
     }

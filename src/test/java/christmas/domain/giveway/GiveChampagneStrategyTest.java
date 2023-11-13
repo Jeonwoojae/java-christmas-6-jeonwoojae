@@ -24,7 +24,7 @@ class GiveChampagneStrategyTest {
         menus.add(MAIN_MENU_LIST);
         menus.add(APPETIZER_LIST);
         Order order = new Order(String.join(",", menus));
-        Menu freeMenu = giveChampagneStrategy.getFreeMenu(order);
+        Menu freeMenu = giveChampagneStrategy.getFreeMenu(order).get();
 
         assertThat(freeMenu).isEqualTo(Menu.CHAMPAGNE);
     }
@@ -33,8 +33,7 @@ class GiveChampagneStrategyTest {
     @DisplayName("12만원 미만이면 샴페인을 증정하지 않는다.")
     void getNoFreeMenu() {
         Order order = new Order(DESSERT_LIST);
-        Menu freeMenu = giveChampagneStrategy.getFreeMenu(order);
 
-        assertThat(freeMenu).isNull();
+        assertTrue(giveChampagneStrategy.getFreeMenu(order).isEmpty());
     }
 }

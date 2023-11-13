@@ -10,6 +10,7 @@ import christmas.dto.TotalBenefit;
 import christmas.domain.giveway.GiveawayEvent;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 public class Payment {
     private final List<DateDiscountStrategy> discountStrategies;
@@ -38,10 +39,8 @@ public class Payment {
     private List<Menu> processGiveawayEvent(Order order) {
         List<Menu> freeMenus = new ArrayList<>();
         for (GiveawayEvent giveawayEvent : giveawayEvents) {
-            Menu menu = giveawayEvent.getFreeMenu(order);
-            if (menu != null) {
-                freeMenus.add(menu);
-            }
+            Optional<Menu> optionalMenu = giveawayEvent.getFreeMenu(order);
+            optionalMenu.ifPresent(freeMenus::add);
         }
         return freeMenus;
     }

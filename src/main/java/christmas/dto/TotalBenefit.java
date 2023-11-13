@@ -5,6 +5,11 @@ import christmas.domain.badge.Badge;
 import java.util.List;
 
 public record TotalBenefit(List<DiscountInfo> totalDiscountInfo, List<Menu> freeMenus, Badge badge) {
+    public Money getOnlyDiscountedMoney() {
+        Money total = new Money(0);
+        total = calculateDiscount(total);
+        return total;
+    }
 
     public Money getTotalDiscount() {
         Money total = new Money(0);

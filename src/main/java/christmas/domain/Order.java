@@ -11,13 +11,10 @@ public class Order {
     private final Map<Menu, Integer> orderMenus;
 
     public Order(String orderInput) {
-        // 주문 문자열을 파싱하여 메뉴와 수량의 맵을 생성
         Map<Menu, Integer> parsedOrder = parseOrderInput(orderInput);
 
-        // 주문 예외사항 확인
         checkOrder(parsedOrder);
 
-        // 주문 메뉴 설정
         this.orderMenus = parsedOrder;
     }
 
@@ -116,6 +113,20 @@ public class Order {
             }
         }
         return count;
+    }
+
+    @Override
+    public String toString() {
+        StringBuilder orderDetails = new StringBuilder();
+
+        for (Map.Entry<Menu, Integer> entry : orderMenus.entrySet()) {
+            orderDetails.append(entry.getKey().getName())
+                    .append(" ")
+                    .append(entry.getValue())
+                    .append("개\n");
+        }
+
+        return orderDetails.toString();
     }
 
 }

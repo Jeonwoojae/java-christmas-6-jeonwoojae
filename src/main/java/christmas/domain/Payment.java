@@ -5,6 +5,7 @@ import christmas.domain.badge.BadgeFactory;
 import christmas.domain.discount.DateDiscountStrategy;
 import christmas.dto.Day;
 import christmas.dto.DiscountInfo;
+import christmas.dto.Money;
 import christmas.dto.TotalBenefit;
 import christmas.domain.giveway.GiveawayEvent;
 import java.util.ArrayList;
@@ -20,10 +21,18 @@ public class Payment {
     }
 
     public TotalBenefit process(Order order, Day day) {
-        List<DiscountInfo> totalDiscountInfo = processDiscount(order, day);
-        List<Menu> freeMenus = processGiveawayEvent(order);
+        List<DiscountInfo> totalDiscountInfo = new ArrayList<>();
+        List<Menu> freeMenus = new ArrayList<>();
+        if (isEventTarget(order)) {
+            totalDiscountInfo = processDiscount(order, day);
+            freeMenus = processGiveawayEvent(order);
+        }
         Badge badge = BadgeFactory.getBadge(totalDiscountInfo);
         return new TotalBenefit(totalDiscountInfo, freeMenus, badge);
+    }
+
+    private boolean isEventTarget(Order order) {
+        return (order.getTotalPrice()).isGreaterThan(new Money(10_000));
     }
 
     private List<Menu> processGiveawayEvent(Order order) {

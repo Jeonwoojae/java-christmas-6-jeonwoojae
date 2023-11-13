@@ -28,6 +28,7 @@ class PaymentTest {
     private final Payment payment = new Payment(discountStrategyList, giveawayEventList);
 
     private final String MENU_LIST = "초코케이크-1,아이스크림-1,티본스테이크-1,해산물파스타-1,시저샐러드-1";
+    private final String UNDER_TEN_THOUSAND_WON = "시저샐러드-1";
 
     @Test
     @DisplayName("디데이할인 1200원 , 평일할인 4046원, 특별할인 1000원")
@@ -38,5 +39,16 @@ class PaymentTest {
         Money totalDiscountMoney = totalBenefit.getTotalDiscount();
 
         assertThat(totalDiscountMoney).isEqualTo(new Money(6_246L));
+    }
+
+    @Test
+    @DisplayName("총 주문 10,000 이하일 시 이벤트는 적용되지 않는다.")
+    void processWithNotEventTarget() {
+        Day day = new Day(3);
+        Order order = new Order(UNDER_TEN_THOUSAND_WON);
+        TotalBenefit totalBenefit = payment.process(order,day);
+        Money totalDiscountMoney = totalBenefit.getTotalDiscount();
+
+        assertThat(totalDiscountMoney).isEqualTo(new Money(0L));
     }
 }

@@ -26,18 +26,47 @@ public class EventPlannerController {
 
     public void run() {
         outputView.printWelcome();
-        Day predictDay = new Day(inputView.readDate());
-        Order newOrder = new Order(inputView.readOrder());
-
+        Day predictDay = getPredictDay();
+        Order newOrder = getOrder();
         outputView.printBenefitPreviewMessage();
-        outputView.printOrder(newOrder);
-        outputView.printTotalPriceBeforeDiscount(newOrder);
+        printOrderDetails(newOrder);
 
         TotalBenefit totalBenefit = payment.process(newOrder, predictDay);
+        printBenefitPreview(newOrder, totalBenefit);
+    }
+
+    private void printBenefitPreview(Order newOrder, TotalBenefit totalBenefit) {
         outputView.printGiveawayMenu(totalBenefit);
         outputView.printDiscountDetails(totalBenefit);
         outputView.printTotalBenefitAmount(totalBenefit);
         outputView.printExpectedPaymentAmount(newOrder, totalBenefit);
         outputView.printEventBadge(totalBenefit);
+    }
+
+    private void printOrderDetails(Order newOrder) {
+        outputView.printOrder(newOrder);
+        outputView.printTotalPriceBeforeDiscount(newOrder);
+    }
+
+    private Order getOrder() {
+        Order newOrder;
+        try {
+            newOrder = new Order(inputView.readOrder());
+        } catch (IllegalArgumentException e) {
+            System.out.println(e.getMessage());
+            newOrder = getOrder();
+        }
+        return newOrder;
+    }
+
+    private Day getPredictDay() {
+        Day predictDay;
+        try {
+            predictDay = new Day(inputView.readDate());
+        } catch (IllegalArgumentException e) {
+            System.out.println(e.getMessage());
+            predictDay = getPredictDay();
+        }
+        return predictDay;
     }
 }

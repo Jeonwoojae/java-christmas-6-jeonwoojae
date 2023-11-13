@@ -6,6 +6,7 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
 import java.util.Map.Entry;
+import java.util.NoSuchElementException;
 
 public class Order {
     private final Map<Menu, Integer> orderMenus;
@@ -41,16 +42,26 @@ public class Order {
         String[] menuAndQuantity = order.split("-");
         checkParsingError(menuAndQuantity);
         String menuName = menuAndQuantity[0];
-        int quantity = Integer.parseInt(menuAndQuantity[1]);
+        int quantity = getQuantity(menuAndQuantity);
         checkQuantityRange(quantity);
 
         Menu menu = Menu.findMenuByName(menuName)
-                .orElseThrow(() -> new IllegalArgumentException("메뉴에 없는 메뉴입니다."));
+                .orElseThrow(() -> new IllegalArgumentException("[ERROR] 메뉴에 없는 메뉴입니다."));
 
         return new AbstractMap.SimpleEntry<>(menu, quantity);
     }
 
-    private static void checkQuantityRange(int quantity) {
+    private int getQuantity(String[] menuAndQuantity) {
+        int result;
+        try{
+            result = Integer.parseInt(menuAndQuantity[1]);
+        } catch (NumberFormatException | NoSuchElementException e) {
+            throw new IllegalArgumentException("[ERROR] 유효하지 않은 주문입니다. 다시 입력해 주세요.");
+        }
+        return result;
+    }
+
+    private void checkQuantityRange(int quantity) {
         if (quantity <= 0) {
             throw new IllegalArgumentException("[ERROR] 메뉴의 수량은 1 이상이어야 합니다.");
         }
@@ -58,7 +69,7 @@ public class Order {
 
     private void checkParsingError(String[] menuAndQuantity) {
         if (menuAndQuantity.length != 2) {
-            throw new IllegalArgumentException("[ERROR] 주문 형식이 잘못되었습니다.");
+            throw new IllegalArgumentException("[ERROR] 유효하지 않은 주문입니다. 다시 입력해 주세요.");
         }
     }
 

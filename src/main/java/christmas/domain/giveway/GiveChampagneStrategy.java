@@ -10,7 +10,7 @@ public class GiveChampagneStrategy implements GiveawayEvent{
 
     @Override
     public Optional<Menu> getFreeMenu(Order order) {
-        if (order.getTotalPrice().compareTo(new Money(120_000)) == 1) {
+        if (order.getTotalPrice().isGreaterThan(new Money(120_000))) {
             return Optional.of(freeMenu);
         }
         return Optional.empty();

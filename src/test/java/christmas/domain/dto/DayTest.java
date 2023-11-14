@@ -1,7 +1,9 @@
 package christmas.domain.dto;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThatThrownBy;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNotEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import christmas.dto.Day;
@@ -39,5 +41,40 @@ class DayTest {
         List<Day> days = TEST_WEEKEND_DAYS.stream().map(day -> new Day(day)).toList();
 
         assertFalse(days.stream().allMatch(day -> day.isWeekDay()));
+    }
+
+    @DisplayName("비교할 Day 날짜에 따라 CompareTo는 3종류의 값을 반환할 수 있음")
+    @Test
+    void testCompareTo() {
+        Day first = new Day(1);
+        Day second = new Day(2);
+
+        assertTrue(first.compareTo(second) < 0);
+        assertTrue(second.compareTo(first) > 0);
+        assertTrue(first.compareTo(first) == 0);
+    }
+
+    @Test
+    @DisplayName("같은 값을 가지고 있는 객체는 같다고 할 수 있음")
+    void testEquals() {
+        Day first = new Day(1);
+        Day first2 = new Day(1);
+        Day second = new Day(2);
+
+        assertEquals(first, first2);
+        assertNotEquals(first, second);
+        assertNotEquals(first, null);
+        assertNotEquals(first, new Object());
+    }
+
+    @Test
+    @DisplayName("같은 값을 가진 Day는 같은 해시코드")
+    void testHashCode() {
+        Day first = new Day(1);
+        Day first2 = new Day(1);
+        Day second = new Day(2);
+
+        assertEquals(first.hashCode(), first2.hashCode());
+        assertNotEquals(first.hashCode(), second.hashCode());
     }
 }

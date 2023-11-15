@@ -21,7 +21,7 @@ class BadgeFactoryTest {
     @DisplayName("혜택 금액이 5천원 이상이면 별 배지를 제공한다.")
     void getStarBadge() {
         List<DiscountInfo> fiveThousandPrice = new ArrayList<>(List.of(FiveThousandPrice));
-        Badge badge = BadgeFactory.getBadge(fiveThousandPrice);
+        Badge badge = BadgeFactory.getBadge(fiveThousandPrice, null);
         assertInstanceOf(StarBadge.class, badge);
     }
 
@@ -29,7 +29,7 @@ class BadgeFactoryTest {
     @DisplayName("혜택 금액이 1만원 이상이면 트리 배지를 제공한다.")
     void getTreeBadge() {
         List<DiscountInfo> tenThousandPrice = new ArrayList<>(List.of(TenThousandPrice));
-        Badge badge = BadgeFactory.getBadge(tenThousandPrice);
+        Badge badge = BadgeFactory.getBadge(tenThousandPrice, null);
         assertInstanceOf(TreeBadge.class, badge);
     }
 
@@ -37,7 +37,7 @@ class BadgeFactoryTest {
     @DisplayName("혜택 금액이 2만원 이상이면 산타 배지를 제공한다.")
     void getSantaBadge() {
         List<DiscountInfo> twentyThousandPrice = new ArrayList<>(List.of(TwentyThousandPrice));
-        Badge badge = BadgeFactory.getBadge(twentyThousandPrice);
+        Badge badge = BadgeFactory.getBadge(twentyThousandPrice, null);
         assertInstanceOf(SantaBadge.class, badge);
     }
 
@@ -45,7 +45,7 @@ class BadgeFactoryTest {
     @DisplayName("혜택 금액이 5천원 미만이면 배지를 제공하지 않는다.")
     void getNoneBadge() {
         List<DiscountInfo> noneBadgePrice = new ArrayList<>(List.of(NoneBadgePrice));
-        Badge badge = BadgeFactory.getBadge(noneBadgePrice);
+        Badge badge = BadgeFactory.getBadge(noneBadgePrice, null);
         assertInstanceOf(NoneBadge.class, badge);
     }
 }

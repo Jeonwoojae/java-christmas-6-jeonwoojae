@@ -28,7 +28,7 @@ public class Payment {
             totalDiscountInfo = processDiscount(order, day);
             freeMenus = processGiveawayEvent(order);
         }
-        Badge badge = BadgeFactory.getBadge(totalDiscountInfo);
+        Badge badge = BadgeFactory.getBadge(totalDiscountInfo, freeMenus);
         return new TotalBenefit(totalDiscountInfo, freeMenus, badge);
     }
 

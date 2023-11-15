@@ -36,6 +36,7 @@ class MoneyTest {
     @DisplayName("같은 값을 가지고 있는 객체는 같다고 할 수 있음")
     void testEquals() {
         assertEquals(LOW_MONEY, LOW_MONEY_2);
+        assertEquals(LOW_MONEY, LOW_MONEY);
         assertNotEquals(LOW_MONEY, HIGH_MONEY);
         assertNotEquals(LOW_MONEY, null);
         assertNotEquals(LOW_MONEY, new Object());
